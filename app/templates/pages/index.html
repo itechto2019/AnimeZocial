@@ -1,0 +1,24 @@
+{% extends 'app.html' %}
+{% block content %}
+    <div style="width: 350px;position: relative;">
+        {% include 'components/topics.html' %}
+    </div>
+    <div class="main-panel">
+        {% if feeds %}
+            {% include 'components/feeds.html' %}
+        {% else %}
+            <div style="padding: 10px;">
+                <h3>No result found!</h3>
+            </div>
+        {% endif %}
+            
+        {% if request.user.is_authenticated == False %}
+            <div style="padding: 10px;">
+                <h3>Please login to see more post</h3>
+            </div>        
+        {% endif %}
+    </div>
+    <div style="width: 350px;">
+        {% include 'components/recents.html' %}
+    </div>
+{% endblock content %}

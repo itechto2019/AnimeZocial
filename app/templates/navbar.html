@@ -1,0 +1,42 @@
+<nav >
+    <div class="app-name-container">
+        <a href="{% url 'index' %}">
+            <h3>AnimeZocial</h3>
+        </a>
+    </div>
+    {% if request.user.is_authenticated %}
+    <div  style="width: 100%;margin-left: 5%;">
+        <form action="{% url 'index' %}" method="GET">
+            <div class="input-group">
+                <input type="text" name="q" style="width: 100%;" placeholder="Search - e.g Topic, People, etc...">
+            </div>
+        </form>
+    </div>
+    {% endif %}
+    <div class="app-navlinks">
+        <div class="app-link"><a href="{% url 'index' %}">Home</a></div>        
+        {% if request.user.is_authenticated %}
+            <div class="app-link"><a href="{% url 'create-feed' %}">Create</a></div>
+            <div class="app-link"><a href="{% url 'profile-info' request.user.username %}">Profile</a></div>
+            <div class="app-link"><a href="{% url 'logout' %}">Logout</a></div>
+        {% else %}
+            <div class="app-link"><a href="{% url 'login' %}">Login</a></div>
+        {% endif %}
+    </div>
+</nav>
+<!-- Mobile -->
+<nav class="nav-mobile">
+    <div class="app-name-container-mobile">
+        <a href="{% url 'index' %}">
+            <h3>AnimeZocial</h3>
+        </a>
+    </div>
+    <div class="app-navlinks-mobile">
+        <div class="app-link-mobile"><a href="{% url 'index' %}">Home</a></div>
+        <div class="app-link-mobile"><a href="{% url 'create-feed' %}">Create</a></div>
+        <div class="app-link-mobile"><a href="">Browse</a></div>
+        <div class="app-link-mobile"><a href="">Profile</a></div>
+        <div class="app-link-mobile"><a href="{% url 'login' %}">Login</a></div>
+    </div>
+    {% include 'components/topics.html' %}
+</nav>

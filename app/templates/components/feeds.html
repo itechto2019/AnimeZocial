@@ -1,0 +1,103 @@
+<div class="feeds">
+    {% for feed in feeds %}
+    <div class="feed">
+        <div class="feed-header">
+            <div class="feed-info">
+                <div class="feed-user">
+                    <div>
+                        <a href="{% url 'profile-info' feed.user.username %}">@{{feed.user}}</a> | 
+                        <small>{{feed.created|timesince}} ago</small>                        
+                    </div>
+                </div>
+            </div>
+            {% if request.user == feed.user %}
+            <div class="actions" onclick="openMenu('{{feed.id}}')">
+                <div class="action-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                        <path
+                            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                    </svg>
+                    <span class="{{feed.id}}">
+                        <div class="action-span">
+                            <div class="action">
+                                <a href="{% url 'update-feed' feed.id %}" class="edit-action">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
+                                    Edit
+                                </a>
+                            </div>
+                            <div class="action">
+                                <a href="{% url 'delete-feed' feed.id %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="feed-body">
+            <div class="feed-title">
+                <h2>{{feed.topic}}</h2>
+            </div>
+            <hr>
+            {% if request.user.is_authenticated %}
+                <p>{{feed.body}}</p>
+            {% else %}
+                <p>Please login to see the post.</p>
+            {% endif %}
+        </div>
+        <div class="feed-footer">
+            <div class="feed-reactions">
+                <div class="feed-react">
+                    {% if request.user.is_authenticated %}
+                    <div>
+                        <a href="{% url 'feed' feed.user feed.topic feed.id %}" style="background-color: transparent;border:none;color: #F6F6F6;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                            </svg>
+                        </a>
+                    </div>                    
+                    {% else %}
+                    <div>
+                        <a href="{% url 'login' %}" style="background-color: transparent;border:none;color: #F6F6F6;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    {% endif %}                    
+                </div>
+                <div class="feed-react">
+                    <small>
+                        {{feed.like_set.all.count}}
+                    </small>
+                </div>
+                <div class="feed-react">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                          </svg>
+                    </div>                    
+                </div>
+                <div class="feed-react">
+                    <small>
+                        {{feed.comment_set.all.count}}
+                    </small>
+                </div>
+                <div class="feed-button">
+                    <a href="{% url 'feed' feed.user feed.topic feed.id %}">Join</a>
+                </div>
+            </div>            
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+

@@ -1,0 +1,23 @@
+{% extends 'app.html' %}
+{% block content %}
+<style>
+    main {
+        grid-template-columns: auto;
+        place-content: center;
+    }
+</style>
+    <div class="feed-obj">
+        <div class="feed-obj-header">
+            <h4>Topic: {{feed.topic}}</h4>
+            <small>{{feed.created}}</small>
+            <div>
+                <small>posted {{feed.created|timesince}} ago</small>
+            </div>
+        </div>
+        <p>Are you sure do you want to delete {{feed}}?</p>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+        </form>
+    </div>
+{% endblock %}

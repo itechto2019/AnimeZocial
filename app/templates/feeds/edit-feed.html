@@ -1,0 +1,30 @@
+{% extends 'app.html' %}
+{% block content %}
+<style>
+    main {
+        grid-template-columns: auto;
+    }
+</style>
+    <div class="form-feed">
+        <div class="form-container">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <h3>Edit your post</h3>
+                </div>
+                {% for field in form %}
+                <div class="input-group">
+                    <label for="topic">{{field.label}}</label>
+                    {{field}}
+                </div>
+                {% endfor %}
+                <div class="input-group" style="padding: 10px 0px 10px 0px">
+                    <a href="{{request.META.HTTP_REFERER}}">Go back</a>
+                </div>      
+                <div class="input-group">
+                    <input type="submit" value="Save">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

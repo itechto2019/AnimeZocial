@@ -1,0 +1,37 @@
+{% extends 'app.html' %}
+
+{% block content %}
+<style>
+    main {
+        place-content: center;
+        grid-template-columns: auto;
+    }
+</style>
+<div class="auth">
+    <div class="form-user">
+        <form method="POST">
+            {% csrf_token %}
+            <h1>Login your account</h1>
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p>{{message}}</p>
+                {% endfor %}                
+            </div>
+            {% endif %}
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Username">
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Password">
+            </div>
+            <div class="input-group">
+                <a href="{% url 'register' %}">Doesn't have an account?</a>
+            </div>
+            <div class="input-group">
+                <input type="submit" value="Login">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

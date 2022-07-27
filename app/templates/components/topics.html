@@ -1,0 +1,29 @@
+<div class="topics" style="position: sticky;top:10%;">
+    <h3>Topics</h3>
+    <div class="topic">
+        <div class="topic-container">
+            <div class="topic-title">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'index' %}">All</a>
+            {% else %}
+                <a href="{% url 'login' %}">All</a>
+            {% endif %}
+                
+            </div>
+            {% for topic in topics %}
+            {% if request.user.is_authenticated %}
+                <div class="topic-title">
+                    <a href="{% url 'index' %}?q={{topic.title}}">{{topic.title}}</a>
+                    <div class="topic-counts">{{topic.feed_set.all.count}}</div>
+                </div>
+            {% else %}
+                <div class="topic-title">
+                    <a href="{% url 'login' %}">{{topic.title}}</a>
+                    <div class="topic-counts">{{topic.feed_set.all.count}}</div>
+                </div>
+            {% endif %}            
+            {% endfor %}
+            
+        </div>
+    </div>
+</div>
